@@ -1,0 +1,5 @@
+* TODO %^{Title} %^g
+SCHEDULED: %^t
+:PROPERTIES:
+:CREATED: %U
+:END:

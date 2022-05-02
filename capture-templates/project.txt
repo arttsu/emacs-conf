@@ -1,0 +1,5 @@
+* TODO %^{Title} %^g
+:PROPERTIES:
+:CREATED: %U
+:PROJECT_ID: %^{Project ID}
+:END:%?
