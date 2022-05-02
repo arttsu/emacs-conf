@@ -35,3 +35,7 @@
   (aw-scope 'frame)
   :bind
   (("M-o" . ace-window)))
+
+(use-package magit
+  :bind
+  (("C-c g" . magit-file-dispatch)))
