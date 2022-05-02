@@ -39,3 +39,13 @@
 (use-package magit
   :bind
   (("C-c g" . magit-file-dispatch)))
+
+(use-package projectile
+  :demand
+  :custom
+  (projectile-switch-project-action 'projectile-dired)
+  :config
+  (projectile-mode 1)
+  :bind
+  (:map projectile-mode-map
+        ("C-c p" . projectile-command-map)))
