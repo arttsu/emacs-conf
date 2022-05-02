@@ -49,3 +49,15 @@
   :bind
   (:map projectile-mode-map
         ("C-c p" . projectile-command-map)))
+
+(use-package vertico
+  :config
+  (vertico-mode))
+
+(use-package savehist
+  :config
+  (savehist-mode))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless)))
