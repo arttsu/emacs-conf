@@ -23,6 +23,10 @@
 
 (load "package.init")
 
+(use-package exec-path-from-shell
+  :when (or (daemonp) (memq window-system '(mac ns x)))
+  :config (exec-path-from-shell-initialize))
+
 (load "theme.init")
 
 (use-package ace-window
