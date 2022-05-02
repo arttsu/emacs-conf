@@ -65,3 +65,5 @@
   (completion-styles '(orderless)))
 
 (use-package markdown-mode)
+
+(load "ruby.init")
