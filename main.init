@@ -69,3 +69,8 @@
 (use-package markdown-mode)
 
 (load "ruby.init")
+
+(use-package ledger-mode
+  :after org
+  :custom
+  (ledger-default-date-format "%Y-%m-%d"))
