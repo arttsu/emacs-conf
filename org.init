@@ -41,19 +41,50 @@
 (defun my/capture-to-file+headline (keys title target-file target-headline template)
   `(,keys ,title entry (file+headline ,target-file ,target-headline) (file ,(my/capture-template template))))
 
+(defun my/skip-sub-entry ()
+  (if (> (org-current-level) 1)
+      (let* ((element (org-element--current-element 1))
+             (end (org-element-property :end element)))
+        (goto-char end))))
+
+(defun my/projects-for-select (file)
+  (org-map-entries
+   '(let* ((element (org-element--current-element 1))
+           (project-id (org-element-property :PROJECT_ID element))
+           (heading (substring-no-properties (org-element-property :raw-value element))))
+      (format "[%s] %s" project-id heading))
+   "/+TODO"
+   `(,file)
+   'my/skip-sub-entry))
+
+(defconst my/SELECTED-PROJECT-ID-RE (rx "[" (group (1+ any)) "]"))
+
+(defun my/selected-project-id (option)
+  (save-match-data
+    (and (string-match my/SELECTED-PROJECT-ID-RE option)
+         (match-string 1 option))))
+
+(defun my/select-project-id (file)
+  (let ((project-option (completing-read "Project: " (my/projects-for-select file))))
+    (my/selected-project-id project-option)))
+
 (setq org-capture-templates
       `(("t" "Task")
         ,(my/capture-to-file "tl" "Life task" my/LIFE-TASKS "task")
         ,(my/capture-to-file "tw" "Work task" my/WORK-TASKS "task")
         ,(my/capture-to-file "tp" "Professional task" my/PROFESSION-TASKS "task")
+        ("s" "Subtask")
+        ,(my/capture-to-file "sl" "Life subtask" my/LIFE-TASKS "life-subtask")
+        ,(my/capture-to-file "sw" "Work subtask" my/WORK-TASKS "work-subtask")
+        ,(my/capture-to-file "sp" "Professional subtask" my/PROFESSION-TASKS "profession-subtask")
         ("d" "Date")
         ,(my/capture-to-file+headline "dl" "Life date" my/LIFE-TASKS "Calendar" "date")
         ,(my/capture-to-file+headline "dw" "Work date" my/WORK-TASKS "Calendar" "date")
         ,(my/capture-to-file+headline "dp" "Professional date" my/PROFESSION-TASKS "Calendar" "date")
-        ("s" "Someday")
-        ,(my/capture-to-file "sl" "Life someday" my/LIFE-SOMEDAY "task")
-        ,(my/capture-to-file "sw" "Work someday" my/WORK-SOMEDAY "task")
-        ,(my/capture-to-file "sp" "Professional someday" my/PROFESSION-SOMEDAY "task")
+        ("m" "Someday")
+        ,(my/capture-to-file "ml" "Life someday" my/LIFE-SOMEDAY "task")
+        ,(my/capture-to-file "mw" "Work someday" my/WORK-SOMEDAY "task")
+        ,(my/capture-to-file "mp" "Professional someday" my/PROFESSION-SOMEDAY "task")
         ("p" "Project")
         ,(my/capture-to-file "pl" "Life project" my/LIFE-PROJECTS "project")
         ,(my/capture-to-file "pw" "Work project" my/WORK-PROJECTS "project")

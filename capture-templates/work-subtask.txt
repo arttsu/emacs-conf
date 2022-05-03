@@ -1,0 +1,4 @@
+* TODO %^{Title} :#%(my/select-project-id my/WORK-PROJECTS):%^g
+:PROPERTIES:
+:CREATED: %U
+:END:%?
