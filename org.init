@@ -1,14 +1,11 @@
 (defconst my/LIFE-TASKS "~/org/life-tasks.org")
-(defconst my/LIFE-CALENDAR "~/org/life-calendar.org")
 (defconst my/LIFE-SOMEDAY "~/org/life-someday.org")
 (defconst my/LIFE-PROJECTS "~/org/life-projects.org")
 (defconst my/WORK-TASKS "~/org/work-tasks.org")
-(defconst my/WORK-CALENDAR "~/org/work-calendar.org")
 (defconst my/WORK-SOMEDAY "~/org/work-someday.org")
 (defconst my/WORK-PROJECTS "~/org/work-projects.org")
 (defconst my/PROFESSION-TASKS "~/org/profession-tasks.org")
 (defconst my/PROFESSION-SOMEDAY "~/org/profession-someday.org")
-(defconst my/PROFESSION-CALENDAR "~/org/profession-calendar.org")
 (defconst my/PROFESSION-PROJECTS "~/org/profession-projects.org")
 
 (defun my/org-clock-in ()
@@ -38,23 +35,62 @@
   (let ((file-name (format "capture-templates/%s.txt" name)))
     (expand-file-name file-name my/ROOT)))
 
-(defun my/capture (keys title target-file template)
+(defun my/capture-to-file (keys title target-file template)
   `(,keys ,title entry (file ,target-file) (file ,(my/capture-template template))))
+
+(defun my/capture-to-file+headline (keys title target-file target-headline template)
+  `(,keys ,title entry (file+headline ,target-file ,target-headline) (file ,(my/capture-template template))))
 
 (setq org-capture-templates
       `(("t" "Task")
-        ,(my/capture "tl" "Life task" my/LIFE-TASKS "task")
-        ,(my/capture "tw" "Work task" my/WORK-TASKS "task")
-        ,(my/capture "tp" "Professional task" my/PROFESSION-TASKS "task")
+        ,(my/capture-to-file "tl" "Life task" my/LIFE-TASKS "task")
+        ,(my/capture-to-file "tw" "Work task" my/WORK-TASKS "task")
+        ,(my/capture-to-file "tp" "Professional task" my/PROFESSION-TASKS "task")
         ("d" "Date")
-        ,(my/capture "dl" "Life date" my/LIFE-CALENDAR "date")
-        ,(my/capture "dw" "Work date" my/WORK-CALENDAR "date")
-        ,(my/capture "dp" "Professional date" my/PROFESSION-CALENDAR "date")
+        ,(my/capture-to-file+headline "dl" "Life date" my/LIFE-TASKS "Calendar" "date")
+        ,(my/capture-to-file+headline "dw" "Work date" my/WORK-TASKS "Calendar" "date")
+        ,(my/capture-to-file+headline "dp" "Professional date" my/PROFESSION-TASKS "Calendar" "date")
         ("s" "Someday")
-        ,(my/capture "sl" "Life someday" my/LIFE-SOMEDAY "task")
-        ,(my/capture "sw" "Work someday" my/WORK-SOMEDAY "task")
-        ,(my/capture "sp" "Professional someday" my/PROFESSION-SOMEDAY "task")
+        ,(my/capture-to-file "sl" "Life someday" my/LIFE-SOMEDAY "task")
+        ,(my/capture-to-file "sw" "Work someday" my/WORK-SOMEDAY "task")
+        ,(my/capture-to-file "sp" "Professional someday" my/PROFESSION-SOMEDAY "task")
         ("p" "Project")
-        ,(my/capture "pl" "Life project" my/LIFE-PROJECTS "project")
-        ,(my/capture "pw" "Work project" my/WORK-PROJECTS "project")
-        ,(my/capture "pp" "Professional project" my/PROFESSION-PROJECTS "project")))
+        ,(my/capture-to-file "pl" "Life project" my/LIFE-PROJECTS "project")
+        ,(my/capture-to-file "pw" "Work project" my/WORK-PROJECTS "project")
+        ,(my/capture-to-file "pp" "Professional project" my/PROFESSION-PROJECTS "project")))
+
+(defun my/day-agenda (keys title files)
+  `(,keys
+    ,title
+    ((agenda ""
+             ((org-agenda-span 1)
+              (org-agenda-skip-scheduled-if-done t)
+              (org-agenda-skip-deadline-if-done t)
+              (org-agenda-skip-timestamp-if-done t)))
+     (todo "NEXT"
+           ((org-agenda-overriding-header "NEXT")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+     (todo "TODO"
+           ((org-agenda-overriding-header "TODO")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+     (todo "WAITING"
+           ((org-agenda-overriding-header "WAITING")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled)))))
+    ((org-agenda-compact-blocks)
+     (org-agenda-files ',files))))
+
+(defun my/projects-agenda (keys title files)
+  `(,keys
+    ,title
+    ((todo "TODO" ((org-agenda-overriding-header "PROJECTS"))))
+    ((org-agenda-files ',files))))
+
+(setq org-agenda-custom-commands
+      `(("d" . "Day Agenda")
+        ,(my/day-agenda "dl" "Life Day Agenda" `(,my/LIFE-TASKS ,my/PROFESSION-TASKS))
+        ,(my/day-agenda "dw" "Work Day Agenda" `(,my/WORK-TASKS ,my/PROFESSION-TASKS))
+        ("p" . "Projects")
+        ,(my/projects-agenda "pl" "Life Projects" `(,my/LIFE-PROJECTS ,my/PROFESSION-PROJECTS))
+        ,(my/projects-agenda "pw" "Work Projects" `(,my/WORK-PROJECTS ,my/PROFESSION-PROJECTS))))
+
+(setq org-agenda-files `(,my/LIFE-TASKS ,my/WORK-TASKS ,my/PROFESSION-TASKS))
