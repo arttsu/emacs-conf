@@ -56,6 +56,10 @@
    :map projectile-mode-map
         ("C-c p" . projectile-command-map)))
 
+(use-package rg
+  :config
+  (rg-enable-default-bindings))
+
 (use-package vertico
   :config
   (vertico-mode))
