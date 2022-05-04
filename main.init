@@ -76,6 +76,12 @@
   :config
   (global-company-mode))
 
+(use-package avy
+  :config
+  (avy-setup-default)
+  :bind
+  (("C-'" . avy-goto-char-timer)))
+
 (use-package markdown-mode)
 
 (load "ruby.init")
