@@ -4,6 +4,7 @@
 (defconst my/SOMEDAY_FILE "~/org/someday.org")
 
 (defun my/org-clock-in ()
+  (interactive)
   (org-clock-in '(4)))
 
 (defun my/capture-template (name)
