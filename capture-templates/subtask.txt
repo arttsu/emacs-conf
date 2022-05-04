@@ -1,6 +1,5 @@
-* TODO %^{Title} %^g
-SCHEDULED: %^t
+* TODO %^{Title}
 :PROPERTIES:
 :CREATED: %U
 :GTD_TYPE: Task
-:END:
+:END:%?

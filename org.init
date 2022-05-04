@@ -41,32 +41,48 @@
 (defun my/capture-to-file+headline (keys title target-file target-headline template)
   `(,keys ,title entry (file+headline ,target-file ,target-headline) (file ,(my/capture-template template))))
 
-(defun my/skip-sub-entry ()
-  (if (> (org-current-level) 1)
-      (let* ((element (org-element--current-element 1))
-             (end (org-element-property :end element)))
-        (goto-char end))))
+(defun my/capture-to-file-at-point (keys title target-file target-fn template)
+  `(,keys ,title entry (file+function ,target-file ,target-fn) (file ,(my/capture-template template))))
 
-(defun my/projects-for-select (file)
+(defconst my/PROJECT_ID_IN_SELECT_OPTION_RE (rx string-start "[" (group (1+ any)) "]"))
+
+(defun my/extract-project-id-from-select-option (option)
+  (save-match-data
+    (and (string-match my/PROJECT_ID_IN_SELECT_OPTION_RE option)
+         (match-string 1 option))))
+
+(defun my/read-projects-to-alist (file)
   (org-map-entries
    '(let* ((element (org-element--current-element 1))
            (project-id (org-element-property :PROJECT_ID element))
-           (heading (substring-no-properties (org-element-property :raw-value element))))
-      (format "[%s] %s" project-id heading))
-   "/+TODO"
-   `(,file)
-   'my/skip-sub-entry))
+           (heading (substring-no-properties (org-element-property :raw-value element)))
+           (begin (org-element-property :begin element)))
+      (cons project-id `(:heading ,heading :begin ,begin)))
+   "TODO=\"TODO\"+GTD_TYPE=\"Project\""
+   `(,file)))
 
-(defconst my/SELECTED-PROJECT-ID-RE (rx "[" (group (1+ any)) "]"))
+(defun my/project-alist-to-select-options (project-alist)
+  (seq-map (lambda (el)
+             (let* ((project-id (car el))
+                    (project-props (cdr el))
+                    (heading (plist-get project-props :heading)))
+               (format "[%s] %s" project-id heading)))
+           project-alist))
 
-(defun my/selected-project-id (option)
-  (save-match-data
-    (and (string-match my/SELECTED-PROJECT-ID-RE option)
-         (match-string 1 option))))
+(defun my/goto-select-project (file)
+  (let* ((project-alist (my/read-projects-to-alist file))
+         (options (my/project-alist-to-select-options project-alist))
+         (selected-option (completing-read "Select project: " options))
+         (selected-project-id (my/extract-project-id-from-select-option selected-option))
+         (selected-project-props (cdr (assoc selected-project-id project-alist)))
+         (selected-project-begin (plist-get selected-project-props :begin)))
+    (goto-char selected-project-begin)))
 
-(defun my/select-project-id (file)
-  (let ((project-option (completing-read "Project: " (my/projects-for-select file))))
-    (my/selected-project-id project-option)))
+(defvar my/capture-prompt-history nil)
+
+(defun my/capture-prompt (prompt var)
+  (make-local-variable var)
+  (set var (read-string (concat prompt ": ") nil my/capture-prompt-history)))
 
 (setq org-capture-templates
       `(("t" "Task")
@@ -74,9 +90,9 @@
         ,(my/capture-to-file "tw" "Work task" my/WORK-TASKS "task")
         ,(my/capture-to-file "tp" "Professional task" my/PROFESSION-TASKS "task")
         ("s" "Subtask")
-        ,(my/capture-to-file "sl" "Life subtask" my/LIFE-TASKS "life-subtask")
-        ,(my/capture-to-file "sw" "Work subtask" my/WORK-TASKS "work-subtask")
-        ,(my/capture-to-file "sp" "Professional subtask" my/PROFESSION-TASKS "profession-subtask")
+        ,(my/capture-to-file-at-point "sl" "Life subtask" my/LIFE-TASKS (apply-partially 'my/goto-select-project my/LIFE-TASKS) "subtask")
+        ,(my/capture-to-file-at-point "sw" "Work subtask" my/WORK-TASKS (apply-partially 'my/goto-select-project my/WORK-TASKS) "subtask")
+        ,(my/capture-to-file-at-point "sp" "Professional subtask" my/PROFESSION-TASKS (apply-partially 'my/goto-select-project my/PROFESSION-TASKS) "subtask")
         ("d" "Date")
         ,(my/capture-to-file+headline "dl" "Life date" my/LIFE-TASKS "Calendar" "date")
         ,(my/capture-to-file+headline "dw" "Work date" my/WORK-TASKS "Calendar" "date")
@@ -86,9 +102,9 @@
         ,(my/capture-to-file "mw" "Work someday" my/WORK-SOMEDAY "task")
         ,(my/capture-to-file "mp" "Professional someday" my/PROFESSION-SOMEDAY "task")
         ("p" "Project")
-        ,(my/capture-to-file "pl" "Life project" my/LIFE-PROJECTS "project")
-        ,(my/capture-to-file "pw" "Work project" my/WORK-PROJECTS "project")
-        ,(my/capture-to-file "pp" "Professional project" my/PROFESSION-PROJECTS "project")))
+        ,(my/capture-to-file "pl" "Life project" my/LIFE-TASKS "project")
+        ,(my/capture-to-file "pw" "Work project" my/WORK-TASKS "project")
+        ,(my/capture-to-file "pp" "Professional project" my/PROFESSION-TASKS "project")))
 
 (defun my/day-agenda (keys title files)
   `(,keys
@@ -98,30 +114,22 @@
               (org-agenda-skip-scheduled-if-done t)
               (org-agenda-skip-deadline-if-done t)
               (org-agenda-skip-timestamp-if-done t)))
-     (todo "NEXT"
+     (tags "+TODO=\"NEXT\"+GTD_TYPE=\"Task\""
            ((org-agenda-overriding-header "NEXT")
             (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
-     (todo "TODO"
+     (tags "+TODO=\"TODO\"+GTD_TYPE=\"Task\""
            ((org-agenda-overriding-header "TODO")
             (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
-     (todo "WAITING"
+     (tags "+TODO=\"WAITING\"+GTD_TYPE=\"Task\""
            ((org-agenda-overriding-header "WAITING")
-            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled)))))
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+     (tags "+TODO=\"TODO\"+GTD_TYPE=\"Project\""
+           ((org-agenda-overriding-header "PROJECTS"))))
     ((org-agenda-compact-blocks)
      (org-agenda-files ',files))))
 
-(defun my/projects-agenda (keys title files)
-  `(,keys
-    ,title
-    ((todo "TODO" ((org-agenda-overriding-header "PROJECTS"))))
-    ((org-agenda-files ',files))))
-
 (setq org-agenda-custom-commands
-      `(("d" . "Day Agenda")
-        ,(my/day-agenda "dl" "Life Day Agenda" `(,my/LIFE-TASKS ,my/PROFESSION-TASKS))
-        ,(my/day-agenda "dw" "Work Day Agenda" `(,my/WORK-TASKS ,my/PROFESSION-TASKS))
-        ("p" . "Projects")
-        ,(my/projects-agenda "pl" "Life Projects" `(,my/LIFE-PROJECTS ,my/PROFESSION-PROJECTS))
-        ,(my/projects-agenda "pw" "Work Projects" `(,my/WORK-PROJECTS ,my/PROFESSION-PROJECTS))))
+      `(,(my/day-agenda "l" "Life Agenda" `(,my/LIFE-TASKS ,my/PROFESSION-TASKS))
+        ,(my/day-agenda "w" "Work Agenda" `(,my/WORK-TASKS ,my/PROFESSION-TASKS))))
 
 (setq org-agenda-files `(,my/LIFE-TASKS ,my/WORK-TASKS ,my/PROFESSION-TASKS))

@@ -1,5 +1,6 @@
-* TODO %^{Title} %^g
+* TODO %^{Title} :#%(my/capture-prompt "Project ID" 'project-id):%^g
 :PROPERTIES:
 :CREATED: %U
-:PROJECT_ID: %^{Project ID}
+:PROJECT_ID: %(progn project-id)
+:GTD_TYPE: Project
 :END:%?

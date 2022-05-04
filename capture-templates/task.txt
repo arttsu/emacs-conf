@@ -1,4 +1,5 @@
 * TODO %^{Title} %^g
 :PROPERTIES:
 :CREATED: %U
+:GTD_TYPE: Task
 :END:%?
