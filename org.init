@@ -6,26 +6,6 @@
 (defun my/org-clock-in ()
   (org-clock-in '(4)))
 
-(use-package org
-  :demand
-  :custom
-  (org-clock-in-switch-to-state "NEXT")
-  (org-clock-out-remove-zero-time-clocks t)
-  (org-clock-out-when-done '("TODO" "WAITING" "DONE" "CANCELLED"))
-  (org-duration-format 'h:mm)
-  (org-log-into-drawer t)
-  (org-log-done 'time)
-  (org-startup-indented t)
-  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-  :bind
-  (("C-c a" . org-agenda)
-   ("C-c c" . org-capture)
-   ("C-c J" . org-clock-goto)
-   ("C-c X" . org-clock-in-last)
-   ("C-c I" . my/org-clock-in)
-   ("C-c O" . org-clock-out)
-   ("C-c R" . org-resolve-clocks)))
-
 (defun my/capture-template (name)
   (let ((file-name (format "capture-templates/%s.txt" name)))
     (expand-file-name file-name my/ROOT)))
@@ -79,25 +59,6 @@
   (make-local-variable var)
   (set var (read-string (concat prompt ": ") nil my/capture-prompt-history)))
 
-(setq org-capture-templates
-      `(("t" "Task")
-        ,(my/capture-to-file "tl" "Life task" my/LIFE_FILE "task")
-        ,(my/capture-to-file "tw" "Work task" my/WORK_FILE "task")
-        ,(my/capture-to-file "tp" "Professional task" my/PROFESSION_FILE "task")
-        ("s" "Subtask")
-        ,(my/capture-to-file-at-point "sl" "Life subtask" my/LIFE_FILE (apply-partially 'my/goto-select-project my/LIFE_FILE) "subtask")
-        ,(my/capture-to-file-at-point "sw" "Work subtask" my/WORK_FILE (apply-partially 'my/goto-select-project my/WORK_FILE) "subtask")
-        ,(my/capture-to-file-at-point "sp" "Professional subtask" my/PROFESSION_FILE (apply-partially 'my/goto-select-project my/PROFESSION_FILE) "subtask")
-        ("d" "Date")
-        ,(my/capture-to-file+headline "dl" "Life date" my/LIFE_FILE "Calendar" "date")
-        ,(my/capture-to-file+headline "dw" "Work date" my/WORK_FILE "Calendar" "date")
-        ,(my/capture-to-file+headline "dp" "Professional date" my/PROFESSION_FILE "Calendar" "date")
-        ,(my/capture-to-file "m" "Someday" my/SOMEDAY_FILE "task")
-        ("p" "Project")
-        ,(my/capture-to-file "pl" "Life project" my/LIFE_FILE "project")
-        ,(my/capture-to-file "pw" "Work project" my/WORK_FILE "project")
-        ,(my/capture-to-file "pp" "Professional project" my/PROFESSION_FILE "project")))
-
 (defun my/day-agenda (keys title files)
   `(,keys
     ,title
@@ -120,8 +81,47 @@
     ((org-agenda-compact-blocks)
      (org-agenda-files ',files))))
 
-(setq org-agenda-custom-commands
-      `(,(my/day-agenda "l" "Life Agenda" `(,my/LIFE_FILE ,my/PROFESSION_FILE))
-        ,(my/day-agenda "w" "Work Agenda" `(,my/WORK_FILE ,my/PROFESSION_FILE))))
-
-(setq org-agenda-files `(,my/LIFE_FILE ,my/WORK_FILE ,my/PROFESSION_FILE))
+(use-package org
+  :demand
+  :custom
+  (org-capture-templates
+   `(("t" "Task")
+     ,(my/capture-to-file "tl" "Life task" my/LIFE_FILE "task")
+     ,(my/capture-to-file "tw" "Work task" my/WORK_FILE "task")
+     ,(my/capture-to-file "tp" "Professional task" my/PROFESSION_FILE "task")
+     ("s" "Subtask")
+     ,(my/capture-to-file-at-point "sl" "Life subtask" my/LIFE_FILE (apply-partially 'my/goto-select-project my/LIFE_FILE) "subtask")
+     ,(my/capture-to-file-at-point "sw" "Work subtask" my/WORK_FILE (apply-partially 'my/goto-select-project my/WORK_FILE) "subtask")
+     ,(my/capture-to-file-at-point "sp" "Professional subtask" my/PROFESSION_FILE (apply-partially 'my/goto-select-project my/PROFESSION_FILE) "subtask")
+     ("d" "Date")
+     ,(my/capture-to-file+headline "dl" "Life date" my/LIFE_FILE "Calendar" "date")
+     ,(my/capture-to-file+headline "dw" "Work date" my/WORK_FILE "Calendar" "date")
+     ,(my/capture-to-file+headline "dp" "Professional date" my/PROFESSION_FILE "Calendar" "date")
+     ,(my/capture-to-file "m" "Someday" my/SOMEDAY_FILE "task")
+     ("p" "Project")
+     ,(my/capture-to-file "pl" "Life project" my/LIFE_FILE "project")
+     ,(my/capture-to-file "pw" "Work project" my/WORK_FILE "project")
+     ,(my/capture-to-file "pp" "Professional project" my/PROFESSION_FILE "project")))
+  (org-agenda-custom-commands
+   `(,(my/day-agenda "l" "Life Agenda" `(,my/LIFE_FILE ,my/PROFESSION_FILE))
+     ,(my/day-agenda "w" "Work Agenda" `(,my/WORK_FILE ,my/PROFESSION_FILE))))
+  (org-agenda-files `(,my/LIFE_FILE ,my/WORK_FILE ,my/PROFESSION_FILE))
+  (org-clock-in-switch-to-state "NEXT")
+  (org-clock-out-remove-zero-time-clocks t)
+  (org-clock-out-when-done '("TODO" "WAITING" "DONE" "CANCELLED"))
+  (org-duration-format 'h:mm)
+  (org-log-into-drawer t)
+  (org-log-done 'time)
+  (org-startup-indented t)
+  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  :config
+  ;; I use "C-'" for avy-goto-char-timer.
+  (add-hook 'org-mode-hook (lambda () (local-unset-key (kbd "C-'"))))
+  :bind
+  (("C-c a" . org-agenda)
+   ("C-c c" . org-capture)
+   ("C-c J" . org-clock-goto)
+   ("C-c X" . org-clock-in-last)
+   ("C-c I" . my/org-clock-in)
+   ("C-c O" . org-clock-out)
+   ("C-c R" . org-resolve-clocks)))
