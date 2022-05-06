@@ -83,6 +83,20 @@
   ;; Avoid key conflicts in Org mode.
   (flycheck-global-modes '(not org-mode)))
 
+(use-package smartparens
+  :demand
+  :init
+  (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'smartparens-strict-mode)
+  :config
+  (require 'smartparens-config)
+  :bind
+  (:map smartparens-strict-mode-map
+        ("C-<right>" . sp-forward-slurp-sexp)
+        ("C-<left>" . sp-backward-slurp-sexp)
+        ("M-<right>" . sp-forward-barf-sexp)
+        ("M-<left>" . sp-backward-barf-sexp)))
+
 (use-package avy
   :config
   (avy-setup-default)
