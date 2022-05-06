@@ -7,4 +7,5 @@ Configuration files for [Emacs](https://www.gnu.org/software/emacs/).
 ```sh
 echo '(load "~/emacs_config/init.el")' >> ~/.emacs.d/init.el
 echo '(load "~/emacs_config/early-init.el")' >> ~/.emacs.d/early-init.el
+cp ~/emacs_config/machine.init{.example,}
 ```

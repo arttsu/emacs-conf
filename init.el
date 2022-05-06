@@ -7,3 +7,4 @@
 (add-to-list 'auto-mode-alist '("\\.init\\'" . my/init-mode))
 
 (load "main.init")
+(load "machine.init")

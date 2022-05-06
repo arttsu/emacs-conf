@@ -1,0 +1,12 @@
+(let ((default-directory "~/.emacs.d/lisp"))
+  (normal-top-level-add-to-load-path '("."))
+  (normal-top-level-add-subdirs-to-load-path))
+
+(use-package request)
+
+(use-package xingbox
+  :straight nil
+  :after request
+  :custom
+  (xingbox-owner "philip.fry")
+  (xingbox-api-key "secret"))
