@@ -23,6 +23,9 @@
 
 (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
 
+(keymap-global-set "M-[" 'previous-buffer)
+(keymap-global-set "M-]" 'next-buffer)
+
 (load "package.init")
 
 (use-package exec-path-from-shell
