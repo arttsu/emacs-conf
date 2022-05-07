@@ -101,7 +101,8 @@
   :config
   (avy-setup-default)
   :bind
-  (("C-'" . avy-goto-char-timer)))
+  (("C-'" . avy-goto-char-timer)
+   ("M-g g" . avy-goto-line)))
 
 (use-package markdown-mode)
 
