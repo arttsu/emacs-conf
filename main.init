@@ -109,6 +109,8 @@
 
 (use-package markdown-mode)
 
+(use-package fish-mode)
+
 (load "ruby.init")
 
 (use-package ledger-mode
