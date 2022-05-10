@@ -1,0 +1,2 @@
+(use-package scala-mode
+  :interpreter "scala")

@@ -113,6 +113,8 @@
 
 (load "ruby.init")
 
+(load "scala.init")
+
 (use-package ledger-mode
   :after org
   :custom
