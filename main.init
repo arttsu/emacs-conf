@@ -129,3 +129,23 @@
   ("C-c v" . vterm-other-window)
   :custom
   (vterm-shell "/usr/local/bin/fish"))
+
+(use-package eradio
+  :custom
+  (eradio-channels '(("DEF CON - soma fm" . "https://somafm.com/defcon256.pls")
+                     ("Deep Space One - soma fm" . "https://somafm.com/deepspaceone.pls")
+                     ("cyberia - lainon" . "https://lainon.life/radio/cyberia.ogg.m3u")
+                     ("cafe - lainon" . "https://lainon.life/radio/cafe.ogg.m3u")
+                     ("BAGeL RADIO" . "http://ais-sa3.cdnstream1.com/2606_128.mp3")))
+  (eradio-player '("mpv" "--no-video" "--no-terminal"))
+  :bind
+  (("C-c r p" . 'eradio-play)
+   ("C-c r s" . 'eradio-stop)
+   ("C-c r t" . 'eradio-toggle)))
+
+(use-package crux
+  :bind
+  (("C-k" . crux-smart-kill-line)
+   ("C-o" . crux-smart-open-line)
+   ("C-S-o" . crux-smart-open-line-above)
+   ("C-^" . crux-top-join-line)))
