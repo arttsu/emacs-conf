@@ -107,6 +107,8 @@
   (("C-'" . avy-goto-char-timer)
    ("M-g g" . avy-goto-line)))
 
+(load "lsp.init")
+
 (use-package markdown-mode)
 
 (use-package fish-mode)
