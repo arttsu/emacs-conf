@@ -121,3 +121,11 @@
   :after org
   :custom
   (ledger-default-date-format "%Y-%m-%d"))
+
+(use-package vterm
+  :init
+  (setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
+  :bind
+  ("C-c v" . vterm-other-window)
+  :custom
+  (vterm-shell "/usr/local/bin/fish"))
