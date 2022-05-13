@@ -144,3 +144,14 @@
    ("C-c Z" . my-org-clock-add-note)))
 
 (use-package ox-slack)
+
+(use-package org-roam
+  :custom
+  (org-roam-v2-ack t)
+  (org-roam-directory "~/zettelkasten")
+  (org-roam-setup)
+  (org-roam-db-autosync-mode)
+  :bind
+  (("C-c n l" . org-roam-buffer-toggle)
+   ("C-c n f" . org-roam-node-find)
+   ("C-c n i" . org-roam-node-insert)))
