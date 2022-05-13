@@ -152,4 +152,6 @@
   (("C-k" . crux-smart-kill-line)
    ("C-o" . crux-smart-open-line)
    ("C-S-o" . crux-smart-open-line-above)
-   ("C-^" . crux-top-join-line)))
+   ("C-^" . crux-top-join-line))
+  :config
+  (advice-add 'crux-delete-file-and-buffer :after 'delete-window))
