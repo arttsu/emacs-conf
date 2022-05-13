@@ -89,6 +89,12 @@
                                (t t))))
     (funcall func)))
 
+(defun my-org-clock-add-note ()
+  (interactive)
+  (with-temp-buffer
+    (org-clock-goto)
+    (org-add-note)))
+
 (use-package org
   :demand
   :custom
@@ -134,6 +140,7 @@
    ("C-c X" . org-clock-in-last)
    ("C-c I" . my/org-clock-in)
    ("C-c O" . org-clock-out)
-   ("C-c R" . org-resolve-clocks)))
+   ("C-c R" . org-resolve-clocks)
+   ("C-c Z" . my-org-clock-add-note)))
 
 (use-package ox-slack)
