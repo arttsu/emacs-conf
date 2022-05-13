@@ -80,6 +80,7 @@
   (company-minimum-prefix-length 2)
   (company-idle-delay 0.2)
   (company-selection-wrap-around t)
+  (company-dabbrev-downcase nil)
   :config
   (global-company-mode))
 
