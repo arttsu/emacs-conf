@@ -141,7 +141,8 @@
    ("C-c I" . my/org-clock-in)
    ("C-c O" . org-clock-out)
    ("C-c R" . org-resolve-clocks)
-   ("C-c Z" . my-org-clock-add-note)))
+   ("C-c Z" . my-org-clock-add-note)
+   ("C-c L" . org-store-link)))
 
 (use-package ox-slack)
 
