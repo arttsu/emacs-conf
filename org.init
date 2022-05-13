@@ -126,3 +126,5 @@
    ("C-c I" . my/org-clock-in)
    ("C-c O" . org-clock-out)
    ("C-c R" . org-resolve-clocks)))
+
+(use-package ox-slack)
