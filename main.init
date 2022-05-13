@@ -110,6 +110,7 @@
   (avy-setup-default)
   :bind
   (("C-'" . avy-goto-char-timer)
+   ("C-;" . avy-pop-mark)
    ("M-g g" . avy-goto-line)))
 
 (load "lsp.init")
