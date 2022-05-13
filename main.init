@@ -76,6 +76,10 @@
   (completion-styles '(orderless)))
 
 (use-package company
+  :custom
+  (company-minimum-prefix-length 2)
+  (company-idle-delay 0.2)
+  (company-selection-wrap-around t)
   :config
   (global-company-mode))
 
