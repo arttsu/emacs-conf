@@ -19,8 +19,6 @@
 
 (setq shell-file-name "/bin/sh")
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
 (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
 
 (keymap-global-set "M-[" 'previous-buffer)
