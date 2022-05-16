@@ -94,6 +94,7 @@
   :init
   (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'smartparens-strict-mode)
+  (add-hook 'scala-mode-hook #'smartparens-mode)
   :config
   (require 'smartparens-config)
   :bind
