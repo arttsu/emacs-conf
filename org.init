@@ -129,10 +129,12 @@
   (org-log-done 'time)
   (org-startup-indented t)
   (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  (org-clock-persist t)
   :config
   ;; I use "C-'" for avy-goto-char-timer.
   (add-hook 'org-mode-hook (lambda () (local-unset-key (kbd "C-'"))))
   (advice-add 'org-store-log-note :around #'my-org--with-no-drawer)
+  (org-clock-persistence-insinuate)
   :bind
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture)
