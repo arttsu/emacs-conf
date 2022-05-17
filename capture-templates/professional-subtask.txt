@@ -1,0 +1,5 @@
+* TODO [#C] %^{Title}
+:PROPERTIES:
+:CREATED: %U
+:GTD_TYPE: Task
+:END:%?
