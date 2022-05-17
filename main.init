@@ -19,8 +19,6 @@
 
 (setq shell-file-name "/bin/sh")
 
-(add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
-
 (keymap-global-set "M-[" 'previous-buffer)
 (keymap-global-set "M-]" 'next-buffer)
 
@@ -156,3 +154,12 @@
    ("C-^" . crux-top-join-line))
   :config
   (advice-add 'crux-delete-file-and-buffer :after 'delete-window))
+
+(use-package super-save
+  :custom
+  (super-save-auto-save-when-idle t)
+  :config
+  (super-save-mode 1)
+  (setq auto-save-default nil)
+  (add-to-list 'super-save-triggers 'ace-window)
+  (add-to-list 'super-save-hook-triggers 'find-file-hook))
