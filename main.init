@@ -22,6 +22,8 @@
 (keymap-global-set "M-[" 'previous-buffer)
 (keymap-global-set "M-]" 'next-buffer)
 
+(keymap-global-set "M-z" 'zap-up-to-char)
+
 (load "package.init")
 
 (use-package exec-path-from-shell
