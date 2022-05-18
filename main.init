@@ -165,3 +165,6 @@
   (setq auto-save-default nil)
   (add-to-list 'super-save-triggers 'ace-window)
   (add-to-list 'super-save-hook-triggers 'find-file-hook))
+
+(add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
+(add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
