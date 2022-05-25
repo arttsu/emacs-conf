@@ -166,5 +166,21 @@
   (add-to-list 'super-save-triggers 'ace-window)
   (add-to-list 'super-save-hook-triggers 'find-file-hook))
 
+(use-package consult
+  :demand
+  :bind
+  ("C-x b" . consult-buffer)
+  ("C-x 4 b" . consult-buffer-other-window)
+  :config
+  (recentf-mode))
+
+(use-package marginalia
+  :demand
+  :config
+  (marginalia-mode)
+  :bind
+  (:map minibuffer-local-map
+        ("M-A" . marginalia-cycle)))
+
 (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
 (add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
