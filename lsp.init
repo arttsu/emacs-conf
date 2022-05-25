@@ -3,6 +3,9 @@
   (setq lsp-keymap-prefix "C-c l")
   :hook
   (scala-mode . lsp)
-  :commands lsp)
+  :commands lsp
+  :bind
+  (:map lsp-mode-map
+        ("C-c j" . lsp-find-definition)))
 
 (use-package lsp-ui)
