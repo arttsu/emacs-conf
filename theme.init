@@ -13,3 +13,6 @@
     ('dark (my/load-dark-theme))))
 
 (add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
+
+(custom-set-faces
+ '(mode-line ((t (:background "dark blue" :foreground "white")))))
