@@ -15,4 +15,7 @@
 (add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
 
 (custom-set-faces
- '(mode-line ((t (:background "dark blue" :foreground "white")))))
+ '(mode-line ((t (:background "dark blue" :foreground "white"))))
+ '(org-mode-line-clock ((t (:background "purple" :foreground "white"))))
+ '(vc-state-base ((t (:background "black" :foreground "white"))))
+ '(vc-edited-state ((t (:background "black" :foreground "yellow")))))
