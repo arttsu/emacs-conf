@@ -24,6 +24,8 @@
 
 (keymap-global-set "M-z" 'zap-up-to-char)
 
+(tab-bar-mode)
+
 (load "package.init")
 
 (use-package exec-path-from-shell
