@@ -112,7 +112,7 @@
   :bind
   (("C-'" . avy-goto-char-timer)
    ("C-;" . avy-pop-mark)
-   ("M-g g" . avy-goto-line)))
+   ("M-g g" . avy-goto-end-of-line)))
 
 (load "lsp.init")
 
