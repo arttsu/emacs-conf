@@ -106,13 +106,49 @@
         ("M-<right>" . sp-forward-barf-sexp)
         ("M-<left>" . sp-backward-barf-sexp)))
 
+(defun my/copy-till-whitespace ()
+  (set-mark-command nil)
+  (forward-whitespace 1)
+  (forward-whitespace -1)
+  (kill-ring-save nil nil t))
+
+(defun my/copy-between-whitespace ()
+  (interactive)
+  (forward-whitespace -1)
+  (forward-whitespace 1)
+  (my/copy-till-whitespace))
+
+(defun my/avy-action-copy-between-whitespace (point)
+  (save-excursion
+    (goto-char point)
+    (my/copy-between-whitespace))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0)))
+  t)
+
+(defun my/avy-action-yank-between-whitespace (point)
+  (save-excursion
+    (goto-char point)
+    (my/copy-between-whitespace))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0)))
+  (if (derived-mode-p 'vterm-mode)
+      (vterm-yank)
+    (yank))
+  t)
+
 (use-package avy
   :config
   (avy-setup-default)
+  (setf (alist-get ?w avy-dispatch-alist) 'my/avy-action-copy-between-whitespace
+        (alist-get ?v avy-dispatch-alist) 'my/avy-action-yank-between-whitespace)
   :bind
   (("C-'" . avy-goto-char-timer)
    ("C-;" . avy-pop-mark)
-   ("M-g g" . avy-goto-end-of-line)))
+   ("M-g g" . avy-goto-line)
+   ("M-g G" . avy-goto-end-of-line)))
 
 (load "lsp.init")
 
