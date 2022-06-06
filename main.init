@@ -19,12 +19,12 @@
 
 (setq shell-file-name "/bin/sh")
 
-(keymap-global-set "M-[" 'previous-buffer)
-(keymap-global-set "M-]" 'next-buffer)
-
 (keymap-global-set "M-z" 'zap-up-to-char)
 
 (tab-bar-mode)
+(tab-bar-history-mode)
+(keymap-global-set "M-[" 'tab-bar-history-back)
+(keymap-global-set "M-]" 'tab-bar-history-forward)
 
 (load "package.init")
 
