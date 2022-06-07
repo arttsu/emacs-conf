@@ -17,5 +17,6 @@
 (custom-set-faces
  '(mode-line ((t (:background "dark blue" :foreground "white"))))
  '(org-mode-line-clock ((t (:background "purple" :foreground "white"))))
+ '(org-mode-line-clock-overrun ((t (:background "dark red" :foreground "pink"))))
  '(vc-state-base ((t (:background "black" :foreground "white"))))
  '(vc-edited-state ((t (:background "black" :foreground "yellow")))))
