@@ -26,14 +26,28 @@
 (keymap-global-set "M-[" 'tab-bar-history-back)
 (keymap-global-set "M-]" 'tab-bar-history-forward)
 
-(keymap-global-set "M-n" 'forward-whitespace)
-(keymap-global-set "M-p" 'my/backward-whitespace)
-
 (defun my/backward-whitespace ()
   (interactive)
   (forward-whitespace -1)
   (forward-whitespace -1)
   (forward-whitespace 1))
+
+(defun my/kill-forward-whitespace ()
+  (interactive)
+  (set-mark-command nil)
+  (forward-whitespace 1)
+  (kill-region nil nil t))
+
+(defun my/kill-backward-whitespace ()
+  (interactive)
+  (set-mark-command nil)
+  (my/backward-whitespace)
+  (kill-region nil nil t))
+
+(keymap-global-set "M-n" 'forward-whitespace)
+(keymap-global-set "M-p" 'my/backward-whitespace)
+(keymap-global-set "M-N" 'my/kill-forward-whitespace)
+(keymap-global-set "M-P" 'my/kill-backward-whitespace)
 
 (load "package.init")
 
