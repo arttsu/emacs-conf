@@ -26,6 +26,15 @@
 (keymap-global-set "M-[" 'tab-bar-history-back)
 (keymap-global-set "M-]" 'tab-bar-history-forward)
 
+(keymap-global-set "M-n" 'forward-whitespace)
+(keymap-global-set "M-p" 'my/backward-whitespace)
+
+(defun my/backward-whitespace ()
+  (interactive)
+  (forward-whitespace -1)
+  (forward-whitespace -1)
+  (forward-whitespace 1))
+
 (load "package.init")
 
 (use-package exec-path-from-shell
