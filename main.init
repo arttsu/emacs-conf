@@ -79,10 +79,7 @@
   :config
   (projectile-mode 1)
   :bind
-  (("C-c o" . projectile-switch-project)
-   ("C-c f" . projectile-find-file)
-   :map projectile-mode-map
-        ("C-c p" . projectile-command-map)))
+  (:map projectile-mode-map ("C-c p" . projectile-command-map)))
 
 (use-package rg
   :config
@@ -244,6 +241,27 @@
   :bind
   (:map minibuffer-local-map
         ("M-A" . marginalia-cycle)))
+
+(use-package multiple-cursors
+  :config
+  (add-to-list 'mc/cmds-to-run-for-all 'sp-backward-delete-char)
+  (delq 'sp-backward-delete-char 'mc/cmds-to-run-once)
+  :bind
+  ("C-<return>" . set-rectangular-region-anchor)
+  ("C-c k" . mc/mark-all-dwim))
+
+(use-package iy-go-to-char
+  :bind
+  ("C-c f" . iy-go-to-char)
+  ("C-c F" . iy-go-to-char-backward)
+  ("C-c t" . iy-go-up-to-char)
+  ("C-c T" . iy-go-up-to-char-backward)
+  ("C-c ;" . iy-go-to-or-up-to-continue)
+  ("C-c ," . iy-go-to-or-up-to-continue-backward))
+
+(use-package expand-region
+  :bind
+  ("C-=" . 'er/expand-region))
 
 (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
 (add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
