@@ -21,6 +21,8 @@
 
 (keymap-global-set "M-z" 'zap-up-to-char)
 
+(global-subword-mode)
+
 (tab-bar-mode)
 (tab-bar-history-mode)
 (keymap-global-set "M-[" 'tab-bar-history-back)
