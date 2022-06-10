@@ -51,6 +51,8 @@
 (keymap-global-set "M-N" 'my/kill-forward-whitespace)
 (keymap-global-set "M-P" 'my/kill-backward-whitespace)
 
+(keymap-global-set "M-/" 'comment-or-uncomment-region)
+
 (load "package.init")
 
 (use-package exec-path-from-shell
