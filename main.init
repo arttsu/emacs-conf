@@ -23,6 +23,9 @@
 
 (global-subword-mode)
 
+(setq mac-option-key-is-meta t)
+(setq mac-right-option-modifier nil)
+
 (tab-bar-mode)
 (tab-bar-history-mode)
 (keymap-global-set "M-[" 'tab-bar-history-back)
