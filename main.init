@@ -257,7 +257,8 @@
   :bind
   ("C-<return>" . set-rectangular-region-anchor)
   ("C-c k" . mc/mark-all-dwim)
-  ("C-+" . mc/mark-next-like-this))
+  ("C-+" . mc/mark-next-like-this)
+  ("C-c m" . mc/edit-lines))
 
 (use-package iy-go-to-char
   :bind
