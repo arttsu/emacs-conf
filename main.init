@@ -273,5 +273,11 @@
   :bind
   ("C-=" . 'er/expand-region))
 
+(use-package pulsar
+  :custom
+  (pulsar-pulse-on-window-change t)
+  :config
+  (pulsar-global-mode))
+
 (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
 (add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
