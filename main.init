@@ -134,6 +134,11 @@
         ("C-<right>" . sp-forward-slurp-sexp)
         ("C-<left>" . sp-backward-slurp-sexp)
         ("M-<right>" . sp-forward-barf-sexp)
+        ("M-<left>" . sp-backward-barf-sexp)
+        :map smartparens-mode-map
+        ("C-<right>" . sp-forward-slurp-sexp)
+        ("C-<left>" . sp-backward-slurp-sexp)
+        ("M-<right>" . sp-forward-barf-sexp)
         ("M-<left>" . sp-backward-barf-sexp)))
 
 (defun my/copy-till-whitespace ()
