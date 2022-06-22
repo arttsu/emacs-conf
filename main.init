@@ -45,7 +45,7 @@
 
 (defun my/kill-backward-whitespace ()
   (interactive)
-  (set-mark-command nil)
+  (setd-mark-command nil)
   (my/backward-whitespace)
   (kill-region nil nil t))
 
@@ -284,5 +284,9 @@
   :config
   (pulsar-global-mode))
 
+(use-package yaml-mode)
+
 (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
 (add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
+
+(add-to-list 'auto-mode-alist '("\\.ya?ml.erb\\'" . yaml-mode))
