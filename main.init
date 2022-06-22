@@ -299,7 +299,9 @@
 
 (use-package yaml-mode)
 
-(use-package transpose-frame)
+(use-package transpose-frame
+  :bind
+  (("C-c w" . transpose-frame)))
 
 (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
 (add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
