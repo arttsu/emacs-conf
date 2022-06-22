@@ -85,6 +85,7 @@
   (projectile-mode 1)
   :bind
   (("C-x p e" . 'projectile-run-vterm)
+   ("C-x p g" . 'projectile-ripgrep)
    :map projectile-mode-map ("C-c p" . projectile-command-map)))
 
 (use-package rg
