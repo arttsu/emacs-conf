@@ -287,6 +287,8 @@
 
 (use-package yaml-mode)
 
+(use-package transpose-frame)
+
 (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
 (add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
 
