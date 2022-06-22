@@ -31,6 +31,13 @@
 (keymap-global-set "M-[" 'tab-bar-history-back)
 (keymap-global-set "M-]" 'tab-bar-history-forward)
 
+(defun mac-p ()
+  (memq window-system '(mac ns x)))
+
+(when (mac-p)
+  (setq insert-directory-program "gls")
+  (setq dired-listing-switches "-al --group-directories-first"))
+
 (defun my/backward-whitespace ()
   (interactive)
   (forward-whitespace -1)
@@ -59,8 +66,13 @@
 (load "package.init")
 
 (use-package exec-path-from-shell
-  :when (or (daemonp) (memq window-system '(mac ns x)))
+  :when (or (daemonp) (mac-p))
   :config (exec-path-from-shell-initialize))
+
+(use-package dired
+  :straight nil
+  :bind
+  (("<f8>" . dired-jump)))
 
 (load "theme.init")
 
