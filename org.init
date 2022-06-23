@@ -5,6 +5,8 @@
 (defconst my/PROGRAMMING_NOTES_FILE "~/org/programming-notes.org")
 (defconst my/EMACS_NOTES_FILE "~/org/emacs-notes.org")
 (defconst my/WEB_BOOKMARKS_FILE "~/org/web-bookmarks.org")
+(defconst my/PERSONAL_LOG_FILE "~/org/personal-log.org")
+(defconst my/WORK_LOG_FILE "~/org/work-log.org")
 
 (defun my/org-clock-in ()
   (interactive)
@@ -122,7 +124,10 @@
      ("n" "Note")
      ,(my/capture-to-file "np" "Programming note" my/PROGRAMMING_NOTES_FILE "note")
      ,(my/capture-to-file "ne" "Emacs note" my/EMACS_NOTES_FILE "note")
-     ,(my/capture-to-file "w" "Web bookmark" my/WEB_BOOKMARKS_FILE "web-bookmark")))
+     ,(my/capture-to-file "w" "Web bookmark" my/WEB_BOOKMARKS_FILE "web-bookmark")
+     ("l" "Log")
+     ,(my/capture-to-file "ll" "Personal log entry" my/PERSONAL_LOG_FILE "note")
+     ,(my/capture-to-file "lw" "Work log entry" my/WORK_LOG_FILE "note")))
   (org-agenda-custom-commands
    `(,(my/day-agenda "l" "Life Agenda" `(,my/LIFE_FILE ,my/PROFESSION_FILE))
      ,(my/day-agenda "w" "Work Agenda" `(,my/WORK_FILE ,my/PROFESSION_FILE))))
