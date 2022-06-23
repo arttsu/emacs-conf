@@ -232,10 +232,27 @@
   (ledger-default-date-format "%Y-%m-%d"))
 
 (use-package vterm
+  :after (dired projectile)
   :init
   (setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
   :bind
-  ("C-c v" . vterm-other-window)
+  (("C-c v" . vterm-other-window)
+   :map vterm-mode-map
+   ("<f8>" . 'project-find-file)
+   ("M-<f8>" . 'project-switch-to-buffer)
+   ("<f1>" . 'delete-window)
+   ("C-M-<f1>" . 'tab-close)
+   ("<f2>" . 'delete-other-windows)
+   ("<f3>" . 'split-window-right)
+   ("M-<f3>" . 'split-window-below)
+   ("<f4>" . 'rename-buffer)
+   ("C-M-<f4>" . 'tab-rename)
+   ("<f11>" . 'project-other-tab-command)
+   ("C-M-<f11>" . 'tab-new)
+   ("<f9>" . 'tab-bar-history-back)
+   ("M-<f9>" . 'tab-bar-history-forward)
+   ("<f7>" . dired-jump)
+   ("<f6>" . 'projectile-ripgrep))
   :custom
   (vterm-shell "/usr/local/bin/fish"))
 
