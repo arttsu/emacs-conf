@@ -1,6 +1,13 @@
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-pylsp-plugins-pycodestyle-enabled nil)
+  (setq lsp-pylsp-plugins-flake8-enabled t)
+  (setq lsp-pylsp-plugins-pycodestyle-max-line-length 120)
+  (setq lsp-pylsp-plugins-flake8-max-line-length 120)
+  (setq lsp-pyls-plugins-pycodestyle-enabled t)
+  (setq lsp-pyls-plugins-flake8-enabled t)
+  (setq lsp-pyls-plugins-pycodestyle-max-line-length 120)
   :hook
   (scala-mode . lsp)
   (python-mode . lsp)

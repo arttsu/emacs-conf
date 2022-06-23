@@ -223,7 +223,7 @@
 (use-package fish-mode)
 
 (load "ruby.init")
-
+(load "python.init")
 (load "scala.init")
 
 (use-package ledger-mode
