@@ -38,6 +38,11 @@
   (setq insert-directory-program "gls")
   (setq dired-listing-switches "-al --group-directories-first"))
 
+;; Increase lsp-mode performance as described in
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/.
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024))
+
 (defun my/backward-whitespace ()
   (interactive)
   (forward-whitespace -1)

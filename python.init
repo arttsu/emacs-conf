@@ -1,0 +1,7 @@
+(when (mac-p)
+  (setenv "WORKON_HOME" "/usr/local/Caskroom/miniconda/base/envs"))
+
+(use-package pyvenv
+  :config
+  (pyvenv-mode 1)
+  (pyvenv-workon "default"))
