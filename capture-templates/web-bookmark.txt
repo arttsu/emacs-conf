@@ -1,0 +1,5 @@
+* [[%^{Link}][%^{Title}]] %^g
+:PROPERTIES:
+:CREATED: %U
+:END:
+%^{Description}
