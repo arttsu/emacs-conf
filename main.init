@@ -21,6 +21,20 @@
 
 (keymap-global-set "M-z" 'zap-up-to-char)
 
+(keymap-global-set "<f8>" 'project-find-file)
+(keymap-global-set "M-<f8>" 'project-switch-to-buffer)
+(keymap-global-set "<f1>" 'delete-window)
+(keymap-global-set "C-M-<f1>" 'tab-close)
+(keymap-global-set "<f2>" 'delete-other-windows)
+(keymap-global-set "<f3>" 'split-window-right)
+(keymap-global-set "M-<f3>" 'split-window-below)
+(keymap-global-set "<f4>" 'rename-buffer)
+(keymap-global-set "C-M-<f4>" 'tab-rename)
+(keymap-global-set "<f11>" 'project-other-tab-command)
+(keymap-global-set "C-M-<f11>" 'tab-new)
+(keymap-global-set "<f9>" 'tab-bar-history-back)
+(keymap-global-set "M-<f9>" 'tab-bar-history-forward)
+
 (global-subword-mode)
 
 (setq mac-option-key-is-meta t)
@@ -28,8 +42,6 @@
 
 (tab-bar-mode)
 (tab-bar-history-mode)
-(keymap-global-set "M-[" 'tab-bar-history-back)
-(keymap-global-set "M-]" 'tab-bar-history-forward)
 
 (defun mac-p ()
   (memq window-system '(mac ns x)))
@@ -77,7 +89,7 @@
 (use-package dired
   :straight nil
   :bind
-  (("<f8>" . dired-jump)))
+  (("<f7>" . dired-jump)))
 
 (load "theme.init")
 
@@ -101,8 +113,8 @@
   :config
   (projectile-mode 1)
   :bind
-  (("C-x p e" . 'projectile-run-vterm)
-   ("C-x p g" . 'projectile-ripgrep)
+  (("<f12>" . 'projectile-run-vterm)
+   ("<f6>" . 'projectile-ripgrep)
    :map projectile-mode-map ("C-c p" . projectile-command-map)))
 
 (use-package rg
