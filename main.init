@@ -311,7 +311,8 @@
   ("C-<return>" . set-rectangular-region-anchor)
   ("C-c k" . mc/mark-all-dwim)
   ("C-+" . mc/mark-next-like-this)
-  ("C-c m" . mc/edit-lines))
+  ("C-c m" . mc/edit-lines)
+  ("C-S-<mouse-1>" . 'mc/add-cursor-on-click))
 
 (use-package iy-go-to-char
   :bind
