@@ -21,20 +21,6 @@
 
 (keymap-global-set "M-z" 'zap-up-to-char)
 
-(keymap-global-set "<f8>" 'project-find-file)
-(keymap-global-set "M-<f8>" 'project-switch-to-buffer)
-(keymap-global-set "<f1>" 'delete-window)
-(keymap-global-set "C-M-<f1>" 'tab-close)
-(keymap-global-set "<f2>" 'delete-other-windows)
-(keymap-global-set "<f3>" 'split-window-right)
-(keymap-global-set "M-<f3>" 'split-window-below)
-(keymap-global-set "M-<f4>" 'rename-buffer)
-(keymap-global-set "C-M-<f4>" 'tab-rename)
-(keymap-global-set "<f11>" 'project-other-tab-command)
-(keymap-global-set "C-M-<f11>" 'tab-new)
-(keymap-global-set "<f9>" 'tab-bar-history-back)
-(keymap-global-set "M-<f9>" 'tab-bar-history-forward)
-
 (global-subword-mode)
 
 (setq mac-option-key-is-meta t)
@@ -81,6 +67,40 @@
 (keymap-global-set "M-/" 'comment-or-uncomment-region)
 
 (load "package.init")
+
+(defun my/switch-project ()
+  (interactive)
+  (call-interactively 'project-switch-project)
+  (let ((dir-name (-last-item (butlast (s-split "/" default-directory)))))
+    (tab-rename dir-name))
+  (delete-other-windows)
+  (keyboard-quit))
+
+(defun my/switch-project-other-tab ()
+  (interactive)
+  (tab-new)
+  (my/switch-project))
+
+(use-package project
+             :straight nil
+             :config
+             (add-to-list 'project-switch-commands '(magit-status "Magit" "g"))
+             (add-to-list 'project-switch-commands '(project-dired "Dired" "D")))
+
+(keymap-global-set "<f8>" 'project-find-file)
+(keymap-global-set "M-<f8>" 'project-switch-to-buffer)
+(keymap-global-set "<f1>" 'delete-window)
+(keymap-global-set "C-M-<f1>" 'tab-close)
+(keymap-global-set "<f2>" 'delete-other-windows)
+(keymap-global-set "<f3>" 'split-window-right)
+(keymap-global-set "M-<f3>" 'split-window-below)
+(keymap-global-set "M-<f4>" 'rename-buffer)
+(keymap-global-set "C-M-<f4>" 'tab-rename)
+(keymap-global-set "<f11>" 'my/switch-project-other-tab)
+(keymap-global-set "C-<f11>" 'my/switch-project)
+(keymap-global-set "C-M-<f11>" 'tab-new)
+(keymap-global-set "<f9>" 'tab-bar-history-back)
+(keymap-global-set "M-<f9>" 'tab-bar-history-forward)
 
 (use-package exec-path-from-shell
   :when (or (daemonp) (mac-p))
@@ -247,7 +267,8 @@
    ("M-<f3>" . 'split-window-below)
    ("M-<f4>" . 'rename-buffer)
    ("C-M-<f4>" . 'tab-rename)
-   ("<f11>" . 'project-other-tab-command)
+   ("<f11>" . 'my/switch-project-other-tab)
+
    ("C-M-<f11>" . 'tab-new)
    ("<f9>" . 'tab-bar-history-back)
    ("M-<f9>" . 'tab-bar-history-forward)
@@ -307,6 +328,8 @@
   :config
   (add-to-list 'mc/cmds-to-run-for-all 'sp-backward-delete-char)
   (delq 'sp-backward-delete-char 'mc/cmds-to-run-once)
+  (add-to-list 'mc/cmds-to-run-for-all 'kill-region)
+  (delq 'kill-region 'mc/cmds-to-run-once)
   :bind
   ("C-<return>" . set-rectangular-region-anchor)
   ("C-c k" . mc/mark-all-dwim)
