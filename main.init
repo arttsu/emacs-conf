@@ -366,3 +366,7 @@
 (add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
 
 (add-to-list 'auto-mode-alist '("\\.ya?ml.erb\\'" . yaml-mode))
+
+(use-package restclient
+  :config
+  (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
