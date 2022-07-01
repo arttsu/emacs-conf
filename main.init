@@ -108,6 +108,7 @@
 
 (use-package dired
   :straight nil
+  :demand
   :bind
   (("<f7>" . dired-jump)))
 
