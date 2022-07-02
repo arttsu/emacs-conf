@@ -9,7 +9,7 @@
         modus-themes-completions '((matches . (extrabold background intense))
                                    (selection . (semibold accented intense))
                                    (popup . (accented)))
-        modus-themes-lang-checkers '(background straight-underline intense text-also)
+        modus-themes-lang-checkers nil
         modus-themes-subtle-line-numbers t
         modus-themes-markup '(background intense)
         modus-themes-paren-match '(bold intense)
