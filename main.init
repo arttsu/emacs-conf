@@ -1,3 +1,6 @@
+(set-face-attribute 'default nil :font "Iosevka Comfy" :height 160)
+(set-frame-font "Iosevka Comfy" nil t)
+
 (setq create-lockfiles nil)
 (setq make-backup-files nil)
 
