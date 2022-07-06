@@ -272,12 +272,13 @@
    ("M-<f4>" . 'rename-buffer)
    ("C-M-<f4>" . 'tab-rename)
    ("<f11>" . 'my/switch-project-other-tab)
-
+   ("C-<f11>" . 'my/switch-project)
    ("C-M-<f11>" . 'tab-new)
    ("<f9>" . 'tab-bar-history-back)
    ("M-<f9>" . 'tab-bar-history-forward)
    ("<f7>" . dired-jump)
-   ("<f6>" . 'projectile-ripgrep))
+   ("<f6>" . 'projectile-ripgrep)
+   ("<f12>" . 'projectile-run-vterm))
   :custom
   (vterm-shell "/usr/local/bin/fish"))
 
