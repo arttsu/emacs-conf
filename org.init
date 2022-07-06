@@ -26,6 +26,9 @@
 (defun my/capture-to-file+headline (keys title target-file target-headline template)
   `(,keys ,title entry (file+headline ,target-file ,target-headline) (file ,(my/capture-template template))))
 
+(defun my/capture-to-file+headline-s (keys title target-file target-headline template)
+  `(,keys ,title entry (file+headline ,target-file ,target-headline) ,template))
+
 (defun my/capture-to-file-at-point (keys title target-file target-fn template)
   `(,keys ,title entry (file+function ,target-file ,target-fn) (file ,(my/capture-template template))))
 
@@ -134,7 +137,9 @@
      ,(my/capture-to-file "lw" "Work log entry" my/WORK_LOG_FILE "note")
      ("a" "Anki")
      ("ad" "Default deck")
-     ,(my/capture-to-file-s "adb" "Basic card" my/ANKI_FILE (my/anki-card-template "default" "Basic"))))
+     ,(my/capture-to-file+headline-s "adb" "Basic card" my/ANKI_FILE "Default" (my/anki-card-template "default" "Basic"))
+     ("ag" "Geography deck")
+     ,(my/capture-to-file+headline-s "agb" "Basic card" my/ANKI_FILE "Geography" (my/anki-card-template "geography" "Basic"))))
   (org-agenda-custom-commands
    `(,(my/day-agenda "l" "Life Agenda" `(,my/LIFE_FILE ,my/PROFESSION_FILE))
      ,(my/day-agenda "w" "Work Agenda" `(,my/WORK_FILE ,my/PROFESSION_FILE))))
@@ -151,6 +156,7 @@
   (org-clock-persist t)
   (org-use-sub-superscripts '{})
   (org-export-with-sub-superscripts '{})
+  (org-refile-targets '((nil . (:tag . "FOLDER"))))
   :config
   ;; I use "C-'" for avy-goto-char-timer.
   (add-hook 'org-mode-hook (lambda () (local-unset-key (kbd "C-'"))))
@@ -199,7 +205,7 @@
 ** Front
 %%^{Front}
 ** Back
-%%^{Back}")
+%%?")
 
 (defun my/anki-card-template (deck note-type)
   "Generate a capture template for an Anki card of NOTE-TYPE for DECK."
