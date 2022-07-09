@@ -22,7 +22,7 @@
                                   (habit . traffic-light))
         modus-themes-headings '((1 . (background overline 1.3))
                                 (2 . (overline rainbow 1.1))
-                                (3 . (overline))
+                                (3 . ())
                                 (4 . (monochrome)))))
 
 (defun my/load-light-theme ()
