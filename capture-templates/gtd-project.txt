@@ -1,0 +1,23 @@
+* %^{Title} [0/0]
+:PROPERTIES:
+:CAPTURED_AT: %U
+:CATEGORY: %^{Category}
+:COOKIE_DATA: recursive todo
+:END:
+** Info
+:PROPERTIES:
+:VISIBILITY: children
+:END:
+%?
+** References
+:PROPERTIES:
+:VISIBILITY: folded
+:END:
+** Tasks
+:PROPERTIES:
+:VISIBILITY: content
+:END:
+** Notes
+:PROPERTIES:
+:VISIBILITY: folded
+:END:
