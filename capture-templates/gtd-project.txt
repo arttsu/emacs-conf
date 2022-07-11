@@ -11,7 +11,7 @@
 %?
 ** References
 :PROPERTIES:
-:VISIBILITY: folded
+:VISIBILITY: content
 :END:
 ** Tasks
 :PROPERTIES:
