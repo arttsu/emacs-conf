@@ -94,6 +94,25 @@
     ((org-agenda-compact-blocks)
      (org-agenda-files ',files))))
 
+(defun my/gtd-day-agenda (keys title files)
+  `(,keys
+    ,title
+    ((agenda ""
+             ((org-agenda-span 1)
+              (org-agenda-skip-scheduled-if-done t)
+              (org-agenda-skip-deadline-if-done t)
+              (org-agenda-skip-timestamp-if-done t)))
+     (todo "NEXT"
+           ((org-agenda-overriding-header "NEXT")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+     (todo "WAITING"
+           ((org-agenda-overriding-header "WAITING")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+     (tags "+GTD_TYPE=\"project\""
+           ((org-agenda-overriding-header "PROJECTS"))))
+    ((org-agenda-compact-blocks)
+     (org-agenda-files ',files))))
+
 (defun my-org--with-no-drawer (func &rest _args)
   (let ((org-log-into-drawer (cl-case org-log-note-purpose
                                (state nil)
@@ -139,8 +158,8 @@
      ("ag" "Geography deck")
      ,(my/capture-to-file+headline-s "agb" "Basic card" my/ANKI_FILE "Geography" (my/anki-card-template "geography" "Basic"))))
   (org-agenda-custom-commands
-   `(,(my/day-agenda "l" "Life Agenda" `(,my/LIFE_FILE ,my/PROFESSION_FILE))
-     ,(my/day-agenda "w" "Work Agenda" `(,my/WORK_FILE ,my/PROFESSION_FILE))))
+   `(,(my/gtd-day-agenda "l" "Life Day" '("projects.org"))
+     ,(my/gtd-day-agenda "w" "Work Day" '("work-projects.org"))))
   (org-clock-in-switch-to-state "NEXT")
   (org-clock-out-remove-zero-time-clocks t)
   (org-clock-out-when-done '("TODO" "WAITING" "DONE" "CANCELLED"))
