@@ -3,6 +3,7 @@
 :CAPTURED_AT: %U
 :CATEGORY: %^{Category}
 :COOKIE_DATA: recursive todo
+:GTD_TYPE: project
 :END:
 ** Info
 :PROPERTIES:
