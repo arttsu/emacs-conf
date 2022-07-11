@@ -238,3 +238,32 @@
 (defun my/anki-card-template (deck note-type)
   "Generate a capture template for an Anki card of NOTE-TYPE for DECK."
   (format my/ANKI_CARD_CAPTURE_TEMPLATE deck note-type))
+
+(defun my/open-agenda (keys)
+  (let ((tab (tab-bar-get-buffer-tab "*Org Agenda*")))
+    (if tab
+        (let ((tab-name (alist-get 'name (cdr tab))))
+          (tab-switch tab-name))
+      (tab-new)
+      (tab-rename "*Agenda*"))
+    (org-agenda nil keys)
+    (delete-other-windows)))
+
+(defun my/open-personal-agenda ()
+  (interactive)
+  (my/open-agenda "l"))
+
+(defun my/open-work-agenda ()
+  (interactive)
+  (my/open-agenda "w"))
+
+(defhydra hydra-org-agenda (:color blue)
+  "
+Agenda
+^^^^^^
+"
+  ("p" my/open-personal-agenda "Personal agenda")
+  ("w" my/open-work-agenda "Work agenda"))
+
+(keymap-global-set "<f10>" 'hydra-org-agenda/body)
+(keymap-set vterm-mode-map "<f10>" 'hydra-org-agenda/body)
