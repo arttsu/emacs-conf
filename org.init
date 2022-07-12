@@ -148,6 +148,7 @@
      ,(my/capture-to-file+headline "dp" "Professional date" my/PROFESSION_FILE "Calendar" "date")
      ,(my/capture-to-file "m" "Someday" my/SOMEDAY_FILE "task")
      ("p" "Project" entry (file "inbox.org") (file ,(my/capture-template "gtd-project")))
+     ("f" "Project folder" entry (file "inbox.org") (file ,(my/capture-template "project-folder")))
      ("n" "Note")
      ,(my/capture-to-file "np" "Programming note" my/PROGRAMMING_NOTES_FILE "note")
      ,(my/capture-to-file "ne" "Emacs note" my/EMACS_NOTES_FILE "note")
