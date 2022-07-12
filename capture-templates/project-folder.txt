@@ -4,6 +4,7 @@
 :CATEGORY: %^{Category}
 :COOKIE_DATA: recursive todo
 :GTD_TYPE: project
+:ARCHIVE: %s_archive::* %^{Archive title}
 :END:
 ** References (TOP)
 :PROPERTIES:
