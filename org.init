@@ -179,7 +179,7 @@
   ;; Not sure if this works. It worked for sure when it was under :config.
   (customize-set-variable 'org-agenda-files '("calendar.org" "work-calendar.org" "projects.org" "work-projects.org"))
   (setq org-refile-targets '((("projects.org" "work-projects.org") :regexp . "\\(?:\\(?:Note\\|Task\\|Reference\\)s\\)")
-                             (("calendar.org" "work-calendar.org" "gtd-someday.org") :tag . "folder")))
+                             (nil :regexp . "(FOLDER)")))
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
   :config
