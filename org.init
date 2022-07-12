@@ -257,13 +257,45 @@
   (interactive)
   (my/open-agenda "w"))
 
+(defun my/open-file-in-new-tab (filename)
+  (tab-new)
+  (find-file filename))
+
+(defun my/org-file (name)
+  (concat org-directory "/" name ".org"))
+
+(defun my/open-projects ()
+  (interactive)
+  (my/open-file-in-new-tab (my/org-file "projects")))
+
+(defun my/open-work-projects ()
+  (interactive)
+  (my/open-file-in-new-tab (my/org-file "work-projects")))
+
+(defun my/open-calendar ()
+  (interactive)
+  (my/open-file-in-new-tab (my/org-file "calendar")))
+
+(defun my/open-work-calendar ()
+  (interactive)
+  (my/open-file-in-new-tab (my/org-file "work-calendar")))
+
+(defun my/open-inbox ()
+  (interactive)
+  (my/open-file-in-new-tab (my/org-file "inbox")))
+
 (defhydra hydra-org-agenda (:color blue)
   "
 Agenda
 ^^^^^^
 "
-  ("p" my/open-personal-agenda "Personal agenda")
-  ("w" my/open-work-agenda "Work agenda"))
+  ("a" my/open-personal-agenda "Personal agenda")
+  ("b" my/open-work-agenda "Work agenda")
+  ("i" my/open-inbox "Inbox")
+  ("c" my/open-calendar "Calendar")
+  ("m" my/open-work-calendar "Work calendar")
+  ("p" my/open-projects "Projects")
+  ("t" my/open-work-projects "Work projects"))
 
 (keymap-global-set "<f10>" 'hydra-org-agenda/body)
 (keymap-set vterm-mode-map "<f10>" 'hydra-org-agenda/body)
