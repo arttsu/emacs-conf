@@ -109,7 +109,10 @@
            ((org-agenda-overriding-header "WAITING")
             (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
      (tags "+GTD_TYPE=\"project\""
-           ((org-agenda-overriding-header "PROJECTS"))))
+           ((org-agenda-overriding-header "PROJECTS")))
+     (todo "TODO"
+           ((org-agenda-overriding-header "TODO")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled)))))
     ((org-agenda-compact-blocks)
      (org-agenda-files ',files))))
 
