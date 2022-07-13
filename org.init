@@ -180,7 +180,7 @@
   ;; Not sure if this works. It worked for sure when it was under :config.
   (customize-set-variable 'org-agenda-files '("calendar.org" "work-calendar.org" "projects.org" "work-projects.org"))
   (setq org-refile-targets '((("projects.org" "work-projects.org") :regexp . "\\(?:\\(?:Note\\|Task\\|Reference\\)s\\)")
-                             (nil :regexp . "(FOLDER)")))
+                             (("projects.org" "work-projects.org" "calendar.org" "work-calendar.org" "gtd-someday.org") :regexp . "(FOLDER)")))
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
   :config
@@ -288,6 +288,10 @@
   (interactive)
   (my/open-file-in-new-tab (my/org-file "inbox")))
 
+(defun my/open-someday ()
+  (interactive)
+  (my/open-file-in-new-tab (my/org-file "gtd-someday")))
+
 (defhydra hydra-org-agenda (:color blue)
   "
 Agenda
@@ -299,7 +303,8 @@ Agenda
   ("c" my/open-calendar "Calendar")
   ("m" my/open-work-calendar "Work calendar")
   ("p" my/open-projects "Projects")
-  ("t" my/open-work-projects "Work projects"))
+  ("t" my/open-work-projects "Work projects")
+  ("s" my/open-someday "Someday"))
 
 (keymap-global-set "<f10>" 'hydra-org-agenda/body)
 (keymap-set vterm-mode-map "<f10>" 'hydra-org-agenda/body)
