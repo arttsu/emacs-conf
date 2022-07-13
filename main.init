@@ -163,6 +163,7 @@
   (company-idle-delay 0.2)
   (company-selection-wrap-around t)
   (company-dabbrev-downcase nil)
+  (company-show-numbers t)
   :config
   (global-company-mode))
 
