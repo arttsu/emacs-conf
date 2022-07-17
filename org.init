@@ -248,8 +248,7 @@
     (if tab
         (let ((tab-name (alist-get 'name (cdr tab))))
           (tab-switch tab-name))
-      (tab-new)
-      (tab-rename "*Agenda*"))
+      (tab-new))
     (org-agenda nil keys)
     (delete-other-windows)))
 
