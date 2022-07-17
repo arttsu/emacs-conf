@@ -117,6 +117,8 @@
 
 (load "theme.init")
 
+(use-package hydra)
+
 (load "org.init")
 
 (use-package ace-window
@@ -279,7 +281,8 @@
    ("M-<f9>" . 'tab-bar-history-forward)
    ("<f7>" . dired-jump)
    ("<f6>" . 'projectile-ripgrep)
-   ("<f12>" . 'projectile-run-vterm))
+   ("<f12>" . 'projectile-run-vterm)
+   ("<f10>" . 'hydra-org-agenda/body))
   :custom
   (vterm-shell "/usr/local/bin/fish"))
 
@@ -378,5 +381,3 @@
   (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 
 (use-package anki-editor)
-
-(use-package hydra)
