@@ -1,0 +1,13 @@
+(defun my/save-all-buffers (&rest r)
+  (save-some-buffers t))
+
+(add-hook 'focus-out-hook 'my/save-all-buffers)
+(add-hook 'find-file-hook 'my/save-all-buffers)
+
+(advice-add 'ace-select-window :after 'my/save-all-buffers)
+(advice-add 'vterm :before 'my/save-all-buffers)
+(advice-add 'vterm-other-window :before'my/save-all-buffers)
+(advice-add 'projectile-run-vterm :before'my/save-all-buffers)
+(advice-add 'tab-switch :after 'my/save-all-buffers)
+(advice-add 'tab-next :after 'my/save-all-buffers)
+(advice-add 'tab-previous :after 'my/save-all-buffers)
