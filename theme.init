@@ -1,6 +1,13 @@
+(defun my/apply-theme (appearance)
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (modus-themes-load-operandi))
+    ('dark (modus-themes-load-vivendi))))
+
 (use-package modus-themes
+  :demand
   :init
-  (setq modus-themes-bold-constructs t
+  (setq modus-themes-bold-constructs nil
         modus-themes-italic-constructs t
         modus-themes-links '(italic background)
         modus-themes-prompts '(background bold)
@@ -23,18 +30,6 @@
         modus-themes-headings '((1 . (background overline 1.3))
                                 (2 . (overline rainbow 1.1))
                                 (3 . ())
-                                (4 . (monochrome)))))
-
-(defun my/load-light-theme ()
-  (modus-themes-load-operandi))
-
-(defun my/load-dark-theme ()
-  (modus-themes-load-vivendi))
-
-(defun my/apply-theme (appearance)
-  (mapc #'disable-theme custom-enabled-themes)
-  (pcase appearance
-    ('light (my/load-light-theme))
-    ('dark (my/load-dark-theme))))
-
-(add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
+                                (4 . (monochrome))))
+  :config
+  (add-hook 'ns-system-appearance-change-functions #'my/apply-theme))
